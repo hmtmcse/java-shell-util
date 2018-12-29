@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         OSCommandExec osCommandExec = new OSCommandExec();
-        osCommandExec.execute(CommandRequest.withCommand("ping", "google.com").setPrintInConsole(true).setWaitUntilFinish(false));
+        osCommandExec.execute(CommandRequest.withCommand("xping", "google.com").setPrintInConsole(true).setWaitUntilFinish(false));
 
     }
 

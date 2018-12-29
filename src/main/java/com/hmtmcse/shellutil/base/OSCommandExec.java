@@ -2,6 +2,7 @@ package com.hmtmcse.shellutil.base;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class OSCommandExec {
@@ -21,10 +22,27 @@ public class OSCommandExec {
         return null;
     }
 
+
+    private String inputStreamToString(InputStream inputStream){
+        StringBuilder stringBuffer = new StringBuilder();
+       try{
+           BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+           String line = "";
+           while ((line = bufferedReader.readLine()) != null) {
+               stringBuffer.append(line).append("\n");
+           }
+       } catch (IOException e) {
+           stringBuffer.append("\n").append(":::::: IOException: ").append("\n");
+           stringBuffer.append(e.getMessage()).append("\n");
+           stringBuffer.append(":::::: End IOException").append("\n");
+       }
+       return stringBuffer.toString();
+    }
+
     public CommandResponse execute(CommandRequest commandRequest) {
         CommandResponse commandResponse = new CommandResponse();
         try {
-            currentProcess = Runtime.getRuntime().exec(commandRequest.command, commandRequest.environment, commandRequest.commandHome);
+            currentProcess = Runtime.getRuntime().exec(commandRequest.command, commandRequest.getEnvironment(), commandRequest.commandHome);
 
             if (commandRequest.isWaitUntilFinish) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(currentProcess.getInputStream()));
@@ -46,6 +64,10 @@ public class OSCommandExec {
             }
         } catch (IOException | InterruptedException e) {
             commandResponse.isExecuted = false;
+            commandResponse.exceptionMessage = e.getMessage();
+            if (currentProcess != null){
+                commandResponse.commandOutput = inputStreamToString(currentProcess.getErrorStream());
+            }
         }
         return commandResponse;
     }
