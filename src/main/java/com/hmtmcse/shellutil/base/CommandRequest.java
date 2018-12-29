@@ -86,4 +86,5 @@ public class CommandRequest {
     public static CommandRequest withCommand(String ...command){
         return new CommandRequest().setCommand(command);
     }
+
 }

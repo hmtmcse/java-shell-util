@@ -39,11 +39,11 @@ public class OSCommandExec {
        return stringBuffer.toString();
     }
 
+
     public CommandResponse execute(CommandRequest commandRequest) {
         CommandResponse commandResponse = new CommandResponse();
         try {
             currentProcess = Runtime.getRuntime().exec(commandRequest.command, commandRequest.getEnvironment(), commandRequest.commandHome);
-
             if (commandRequest.isWaitUntilFinish) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(currentProcess.getInputStream()));
                 String line = "";
