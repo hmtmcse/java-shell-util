@@ -4,11 +4,10 @@ import com.hmtmcse.console.table.common.TableConstant;
 import com.hmtmcse.console.table.data.Table;
 import com.hmtmcse.console.table.data.TableRowData;
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 public class CLIMenuOrganizer {
 
