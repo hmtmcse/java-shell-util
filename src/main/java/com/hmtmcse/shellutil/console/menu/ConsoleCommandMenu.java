@@ -7,6 +7,8 @@ public class ConsoleCommandMenu extends CLIMenuOrganizer{
         if (args.length == 0){
             printMenu();
         }
+
+
     }
 
 }
