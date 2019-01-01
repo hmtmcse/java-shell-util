@@ -7,14 +7,26 @@ import com.hmtmcse.shellutil.console.menu.ConsoleCommandMenu;
 
 public class Main {
 
-    public static void consoleMenuTest(){
+    public static void consoleMenuTest(String[] args){
         ConsoleCommandMenu consoleCommandMenu = new ConsoleCommandMenu();
-        consoleCommandMenu.addCommand("build", "Compile Source to Binary");
+        consoleCommandMenu
+                .addCommand("build", "Compile Source to Binary")
+                .addOption("c", "Config");
+        consoleCommandMenu.process(args);
+
     }
 
 
     public static void main(String[] args) {
 
+        args = new String[]{"build"};
+        consoleMenuTest(args);
+
+
+    }
+
+
+    public static void execTest(){
         OSCommandExec osCommandExec = new OSCommandExec();
         CommandResponse commandResponse = osCommandExec.execute(CommandRequest.withCommand("which", "git").setPrintInConsole(true).setWaitUntilFinish(false));
 

@@ -6,7 +6,7 @@ public class CLIMenuItem {
 
     public String commandName;
     public String commandDescription = null;
-    public Options options = null;
+    public Options options = new Options();
 
 
     public CLIMenuItem(String commandName, String commandDescription) {
