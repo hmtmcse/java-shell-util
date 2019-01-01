@@ -3,8 +3,15 @@ package com.hmtmcse.shellutil.test;
 import com.hmtmcse.shellutil.base.CommandRequest;
 import com.hmtmcse.shellutil.base.CommandResponse;
 import com.hmtmcse.shellutil.base.OSCommandExec;
+import com.hmtmcse.shellutil.console.menu.ConsoleCommandMenu;
 
 public class Main {
+
+    public static void consoleMenuTest(){
+        ConsoleCommandMenu consoleCommandMenu = new ConsoleCommandMenu();
+        consoleCommandMenu.addCommand("build", "Compile Source to Binary");
+    }
+
 
     public static void main(String[] args) {
 

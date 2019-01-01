@@ -4,6 +4,7 @@ import com.hmtmcse.console.table.common.TableConstant;
 import com.hmtmcse.console.table.data.Table;
 import com.hmtmcse.console.table.data.TableRowData;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,6 +17,12 @@ public class CLIMenuOrganizer {
     public Options addCommand(String name, String description){
         cliMenuItemMap.put(name, new CLIMenuItem(name, description));
         return cliMenuItemMap.get(name).options;
+    }
+
+    public CLIMenuOrganizer addCommand(String name, String description, Options options){
+        cliMenuItemMap.put(name, new CLIMenuItem(name, description));
+        cliMenuItemMap.get(name).options = options;
+        return this;
     }
 
 
@@ -34,6 +41,10 @@ public class CLIMenuOrganizer {
         table.toTablePrint();
     }
 
+
+    public Option option(String opt, boolean hasArg, String description){
+        return new Option(opt, hasArg, description);
+    }
 
     public void printHelp(String commandName){
         if (cliMenuItemMap.get(commandName) == null){
