@@ -19,6 +19,10 @@ public class CLIMenuOrganizer {
         return cliMenuItemMap.get(name).options;
     }
 
+    public CLIMenuItem getMenuItem(String commandName){
+        return cliMenuItemMap.get(commandName);
+    }
+
     public CLIMenuOrganizer addCommand(String name, String description, Options options){
         cliMenuItemMap.put(name, new CLIMenuItem(name, description));
         cliMenuItemMap.get(name).options = options;

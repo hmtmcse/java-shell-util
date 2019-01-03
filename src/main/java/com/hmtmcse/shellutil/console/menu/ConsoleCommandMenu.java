@@ -1,40 +1,42 @@
 package com.hmtmcse.shellutil.console.menu;
 
+import com.hmtmcse.shellutil.common.ShellUtilException;
 import org.apache.commons.cli.*;
 
 import java.util.Arrays;
 
-public class ConsoleCommandMenu extends CLIMenuOrganizer{
+public class ConsoleCommandMenu extends CLIMenuOrganizer {
 
-    private void execute(String[] args){
-        String command = args[0];
-        Arrays.copyOfRange(args, 1, args.length);
+    private void execute(String[] args) throws ShellUtilException {
 
-        CommandLineParser commandLineParser = new DefaultParser();
-        CommandLine cmd = null;
+
         try {
-            cmd = commandLineParser.parse( new Options(), args);
+            CommandLineParser commandLineParser = new DefaultParser();
+            String commandName = args[0];
+            String[] options = Arrays.copyOfRange(args, 1, args.length);
+            CLIMenuItem cliMenuItem = getMenuItem(commandName);
+            if (cliMenuItem == null || cliMenuItem.options == null) {
+                throw new ShellUtilException("Invalid Command Options Definition.");
+            }
+            Options optionDefinition = cliMenuItem.options;
+            CommandLine commandLine = commandLineParser.parse(optionDefinition, options);
+            if (commandLine.hasOption("a")) {
+                System.out.println("Sum of the numbers: ");
+            } else if (commandLine.hasOption("m")) {
+                System.out.println("Multiplication of the numbers: ");
+            }
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new ShellUtilException(e.getMessage());
         }
-
-        //***Interrogation Stage***
-        //hasOptions checks if option is present or not
-        if(cmd.hasOption("a")) {
-            System.out.println("Sum of the numbers: ");
-        } else if(cmd.hasOption("m")) {
-            System.out.println("Multiplication of the numbers: ");
-        }
-
-
-
     }
 
-    public void process(String[] args){
-        if (args.length == 0){
+    public void process(String[] args) throws ShellUtilException {
+        if (args.length == 0) {
             printMenu();
-        }else if (args.length == 1){
+        } else if (args.length == 1) {
             printHelp(args[0]);
+        } else {
+            execute(args);
         }
     }
 
