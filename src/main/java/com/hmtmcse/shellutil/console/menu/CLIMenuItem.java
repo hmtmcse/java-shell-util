@@ -7,6 +7,7 @@ public class CLIMenuItem {
     public String commandName;
     public String commandDescription = null;
     public Options options = new Options();
+    public CLIMenuItemProcessor cliMenuItemProcessor = null;
 
 
     public CLIMenuItem(String commandName, String commandDescription) {

@@ -4,12 +4,53 @@ import com.hmtmcse.shellutil.common.ShellUtilException;
 import org.apache.commons.cli.*;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 public class ConsoleCommandMenu extends CLIMenuOrganizer {
 
+    private String getOptionKey(Option option){
+        if (option.getArgName() != null){
+            return option.getArgName();
+        }else{
+            return option.getOpt();
+        }
+    }
+
+    private LinkedHashMap<String, Object> getCommandOptionsToMap(CommandLine commandLine, Options optionDefinition) {
+        LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
+        for (Option option : optionDefinition.getOptions()) {
+            if (option.getArgs() == -1) {
+                if (commandLine.hasOption(option.getOpt())) {
+                    linkedHashMap.put(getOptionKey(option), true);
+                } else {
+                    linkedHashMap.put(getOptionKey(option), false);
+                }
+            } else {
+                if (option.getArgs() == 1) {
+                    if (commandLine.hasOption(option.getOpt())) {
+                        linkedHashMap.put(getOptionKey(option), commandLine.getOptionValue(option.getOpt()));
+                    } else {
+                        linkedHashMap.put(getOptionKey(option), null);
+                    }
+                } else {
+                    String optionKey = getOptionKey(option);
+                    for (int i = 1; i <= option.getArgs(); i++) {
+                        linkedHashMap.put(optionKey + "Param" + i, null);
+                    }
+                    if (commandLine.hasOption(option.getOpt())) {
+                        int i = 1;
+                        for(Object object: commandLine.getOptionValues(option.getOpt())){
+                            linkedHashMap.put(optionKey + "Param" + i, object);
+                            i++;
+                        }
+                    }
+                }
+            }
+        }
+        return linkedHashMap;
+    }
+
     private void execute(String[] args) throws ShellUtilException {
-
-
         try {
             CommandLineParser commandLineParser = new DefaultParser();
             String commandName = args[0];
@@ -20,15 +61,15 @@ public class ConsoleCommandMenu extends CLIMenuOrganizer {
             }
             Options optionDefinition = cliMenuItem.options;
             CommandLine commandLine = commandLineParser.parse(optionDefinition, options);
-            if (commandLine.hasOption("a")) {
-                System.out.println("Sum of the numbers: ");
-            } else if (commandLine.hasOption("m")) {
-                System.out.println("Multiplication of the numbers: ");
+            LinkedHashMap<String, Object> params = getCommandOptionsToMap(commandLine, optionDefinition);
+            if (cliMenuItem.cliMenuItemProcessor != null){
+                cliMenuItem.cliMenuItemProcessor.process(params);
             }
         } catch (ParseException e) {
             throw new ShellUtilException(e.getMessage());
         }
     }
+
 
     public void process(String[] args) throws ShellUtilException {
         if (args.length == 0) {

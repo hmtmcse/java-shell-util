@@ -32,7 +32,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        args = new String[]{"build", "-m" , "first", "second", "-c"};
+//        args = new String[]{"build", "-m" , "first", "second", "-c"};
+        args = new String[]{"build", "-m" , "first", "second"};
         consoleMenuTest(args);
 
 
