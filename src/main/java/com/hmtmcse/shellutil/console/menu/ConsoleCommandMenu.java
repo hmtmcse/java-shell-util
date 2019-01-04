@@ -78,6 +78,7 @@ public class ConsoleCommandMenu extends CLIMenuOrganizer {
         } else if (args.length == 1) {
             ConsolePrinter.printEmptyLine();
             printHelp(args[0]);
+            ConsolePrinter.printEmptyLine();
         } else {
             execute(args);
         }
