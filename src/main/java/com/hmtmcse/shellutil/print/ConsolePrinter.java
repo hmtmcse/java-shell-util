@@ -20,7 +20,7 @@ public class ConsolePrinter {
         printLine(object, ColorCode.GREEN_BOLD.toString());
     }
 
-    public static void printEmptyLine(Object object){
+    public static void printEmptyLine(){
         System.out.println("");
     }
 }
