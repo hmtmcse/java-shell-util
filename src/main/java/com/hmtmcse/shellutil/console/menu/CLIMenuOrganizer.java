@@ -6,37 +6,47 @@ import com.hmtmcse.console.table.data.TableRowData;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 
 public class CLIMenuOrganizer {
 
-   private LinkedHashMap<String, CLIMenuItem> cliMenuItemMap = new LinkedHashMap<>();
+    private LinkedHashMap<String, CLIMenuItem> cliMenuItemMap = new LinkedHashMap<>();
+    private String commandName = null;
 
-    public Options addCommand(String name, String description){
+    public Options addCommand(String name, String description) {
         cliMenuItemMap.put(name, new CLIMenuItem(name, description));
+        this.commandName = name;
         return cliMenuItemMap.get(name).options;
     }
 
-    public CLIMenuItem getMenuItem(String commandName){
+    public CLIMenuOrganizer addCommandProcessor(CLIMenuItemProcessor cliMenuItemProcessor) {
+        cliMenuItemMap.get(commandName).cliMenuItemProcessor = cliMenuItemProcessor;
+        return this;
+    }
+
+
+    public CLIMenuItem getMenuItem(String commandName) {
         return cliMenuItemMap.get(commandName);
     }
 
-    public CLIMenuOrganizer addCommand(String name, String description, Options options){
+    public CLIMenuOrganizer addCommand(String name, String description, Options options) {
         cliMenuItemMap.put(name, new CLIMenuItem(name, description));
+        this.commandName = name;
         cliMenuItemMap.get(name).options = options;
         return this;
     }
 
 
-    public void printMenu(){
+    public void printMenu() {
         Table table = new Table();
         table.addHeader("Command", TableConstant.LEFT_ALIGN, TableConstant.YALLOW);
         table.addHeader("Description", TableConstant.LEFT_ALIGN, TableConstant.YALLOW);
         TableRowData rowData;
         CLIMenuItem cliMenuItem;
-        for (Map.Entry<String, CLIMenuItem> entry : cliMenuItemMap.entrySet()){
+        for (Map.Entry<String, CLIMenuItem> entry : cliMenuItemMap.entrySet()) {
             cliMenuItem = entry.getValue();
             rowData = table.setRowData(cliMenuItem.commandName);
             rowData.add(cliMenuItem.commandDescription);
@@ -46,14 +56,14 @@ public class CLIMenuOrganizer {
     }
 
 
-    public Option option(String opt, boolean hasArg, String description){
+    public Option option(String opt, boolean hasArg, String description) {
         return new Option(opt, hasArg, description);
     }
 
-    public void printHelp(String commandName){
-        if (cliMenuItemMap.get(commandName) == null){
+    public void printHelp(String commandName) {
+        if (cliMenuItemMap.get(commandName) == null) {
             System.err.println("Invalid Command " + commandName);
-        }else{
+        } else {
             CLIMenuItem cliMenuItem = cliMenuItemMap.get(commandName);
             HelpFormatter helpFormatter = new HelpFormatter();
             helpFormatter.printHelp(commandName, null, cliMenuItem.options, null, true);

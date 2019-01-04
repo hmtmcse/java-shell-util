@@ -29,4 +29,9 @@ public class CLIMenuItem {
         this.options = options;
         return this;
     }
+
+    public CLIMenuItem addCommandProcessor(CLIMenuItemProcessor cliMenuItemProcessor){
+        this.cliMenuItemProcessor = cliMenuItemProcessor;
+        return this;
+    }
 }
