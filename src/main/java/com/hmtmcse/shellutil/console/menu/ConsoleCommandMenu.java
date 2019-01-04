@@ -63,8 +63,9 @@ public class ConsoleCommandMenu extends CLIMenuOrganizer {
             Options optionDefinition = cliMenuItem.options;
             CommandLine commandLine = commandLineParser.parse(optionDefinition, options);
             LinkedHashMap<String, Object> params = getCommandOptionsToMap(commandLine, optionDefinition);
+            CLIOperatorInput cliOperatorInput = new CLIOperatorInput(params);
             if (cliMenuItem.cliMenuItemProcessor != null){
-                cliMenuItem.cliMenuItemProcessor.process(params);
+                cliMenuItem.cliMenuItemProcessor.process(cliOperatorInput);
             }
         } catch (ParseException e) {
             throw new ShellUtilException(e.getMessage());

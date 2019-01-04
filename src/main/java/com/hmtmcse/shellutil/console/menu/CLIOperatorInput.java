@@ -6,6 +6,10 @@ public class CLIOperatorInput {
 
     private LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
+    public CLIOperatorInput(LinkedHashMap<String, Object> params) {
+        this.params = params;
+    }
+
     public String getString(String key){
         Object value = params.get(key);
         if (value != null){
