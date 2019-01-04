@@ -19,4 +19,8 @@ public class ConsolePrinter {
     public static void successPrint(Object object){
         printLine(object, ColorCode.GREEN_BOLD.toString());
     }
+
+    public static void printEmptyLine(Object object){
+        System.out.println("");
+    }
 }
