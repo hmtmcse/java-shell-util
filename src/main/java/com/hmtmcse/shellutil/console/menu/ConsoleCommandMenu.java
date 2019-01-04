@@ -1,6 +1,7 @@
 package com.hmtmcse.shellutil.console.menu;
 
 import com.hmtmcse.shellutil.common.ShellUtilException;
+import com.hmtmcse.shellutil.print.ConsolePrinter;
 import org.apache.commons.cli.*;
 
 import java.util.Arrays;
@@ -75,6 +76,7 @@ public class ConsoleCommandMenu extends CLIMenuOrganizer {
         if (args.length == 0) {
             printMenu();
         } else if (args.length == 1) {
+            ConsolePrinter.printEmptyLine();
             printHelp(args[0]);
         } else {
             execute(args);
