@@ -32,8 +32,8 @@ public class CLIMenuOrganizer {
 
     public void printMenu(){
         Table table = new Table();
-        table.addHeader("Command", TableConstant.LEFT_ALIGN, TableConstant.BLUE);
-        table.addHeader("Description", TableConstant.LEFT_ALIGN, TableConstant.BLUE);
+        table.addHeader("Command", TableConstant.LEFT_ALIGN, TableConstant.YALLOW);
+        table.addHeader("Description", TableConstant.LEFT_ALIGN, TableConstant.YALLOW);
         TableRowData rowData;
         CLIMenuItem cliMenuItem;
         for (Map.Entry<String, CLIMenuItem> entry : cliMenuItemMap.entrySet()){
