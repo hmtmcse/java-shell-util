@@ -8,6 +8,10 @@ public class ConsolePrinter {
         System.out.println(ColorCode.RESET);
     }
 
+    public static void printLine(Object object){
+        System.out.println(object);
+    }
+
     public static void errorPrint(Object object){
         printLine(object, ColorCode.RED_BOLD.toString());
     }

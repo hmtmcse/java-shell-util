@@ -5,7 +5,9 @@ import com.hmtmcse.shellutil.base.CommandResponse;
 import com.hmtmcse.shellutil.base.OSCommandExec;
 import com.hmtmcse.shellutil.common.ShellUtilException;
 import com.hmtmcse.shellutil.console.menu.ConsoleCommandMenu;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 
 public class Main {
 
@@ -36,6 +38,20 @@ public class Main {
 //        args = new String[]{"build", "-m" , "first", "second"};
         consoleMenuTest(args);
 
+        final Option verboseOption = Option.builder("v")
+                .required(false)
+                .desc("Print status with verbosity.")
+                .build();
+        final Option fileOption = Option.builder("f")
+                .required()
+                .hasArg()
+                .desc("File to be processed.")
+                .build();
+        final Options options = new Options();
+        options.addOption(verboseOption);
+        options.addOption(fileOption);
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp( "ant", options );
 
     }
 
