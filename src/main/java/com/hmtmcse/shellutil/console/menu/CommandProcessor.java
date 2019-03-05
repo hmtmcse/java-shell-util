@@ -62,19 +62,15 @@ public class CommandProcessor {
 
 
     private OptionValues processOptions(CommandLine commandLine, OptionDefinition optionDefinition){
-        if (optionDefinition.getCliOptions().getOptions().size() == 0){
+        if (optionDefinition.getCliOptions().getOptions().size() == 0 || commandLine == null){
             return null;
         }
 
-        OptionValues optionValues = OptionValues.init(optionDefinition.getOptions());
+        OptionValues optionValues = OptionValues.init();
+        String identifier;
         for (Option option : optionDefinition.getCliOptions().getOptions()) {
-            if (option.getArgs() == Option.UNINITIALIZED){
-            if (optionDefinition.getOptions().get(option.getOpt()) != null){
-
-            }
-            }else if (option.getArgs() == 1){
-
-            }
+            identifier = option.getOpt();
+            optionValues.setValue(optionDefinition.getOptions().get(identifier), commandLine.getOptionValue(identifier));
         }
         return optionValues;
     }
