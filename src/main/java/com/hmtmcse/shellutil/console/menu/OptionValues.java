@@ -22,21 +22,21 @@ public class OptionValues {
         return null;
     }
 
-    public String asString(String name){
+    public String valueAsString(String name){
         if (options.get(name) != null && options.get(name).value != null){
             return options.get(name).value;
         }
         return null;
     }
 
-    public Integer asInteger(String name){
+    public Integer valueAsInteger(String name){
         if (options.get(name) != null && options.get(name).value != null){
             return Integer.parseInt(options.get(name).value);
         }
         return null;
     }
 
-    public Double asDouble(String name){
+    public Double valueAsDouble(String name){
         if (options.get(name) != null && options.get(name).value != null){
             return Double.parseDouble(options.get(name).value);
         }

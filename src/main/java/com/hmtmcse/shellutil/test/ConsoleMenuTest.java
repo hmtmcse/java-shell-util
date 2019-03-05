@@ -14,6 +14,8 @@ public class ConsoleMenuTest {
             @Override
             public void process(OptionValues optionValues) throws ShellUtilException {
                 ConsolePrinter.printLine("I am in Action Processor");
+                ConsolePrinter.successPrint("Branch: " + optionValues.valueAsString("branch"));
+                ConsolePrinter.successPrint("Type: " + optionValues.valueAsString("type"));
             }
         });
         optionDefinition.setCommandDescription("Build Binary from Source");
