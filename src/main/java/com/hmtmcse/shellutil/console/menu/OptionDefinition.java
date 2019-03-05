@@ -51,9 +51,15 @@ public class OptionDefinition {
             Option.Builder optionBuilder = Option.builder(optionAttribute.identifier);
             optionBuilder.required(optionAttribute.isRequired);
             optionBuilder.hasArg(optionAttribute.argument);
-            if (optionAttribute.description != null){
-                optionBuilder.desc(optionAttribute.description);
+
+            String message = "Required: " + optionAttribute.isRequired;
+            if (optionAttribute.defaultValue != null){
+                message += ", Default Value: " + optionAttribute.defaultValue;
             }
+            if (optionAttribute.description != null){
+                message =  optionAttribute.description + ". " + message;
+            }
+            optionBuilder.desc(message);
             cliOptions.addOption(optionBuilder.build());
         }
         return this;

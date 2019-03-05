@@ -19,10 +19,10 @@ public class ConsoleMenuTest {
         optionDefinition.setCommandDescription("Build Binary from Source");
 
         optionDefinition.addOption("branch", "b");
-        optionDefinition.required().setDescription("VCS Branch Name.");
+        optionDefinition.required().setDescription("VCS Branch Name");
 
         optionDefinition.addOption("type", "t");
-        optionDefinition.setDescription("Build Type. optimize / fresh").setDefaultValue("optimize");
+        optionDefinition.setDescription("Build Type: optimize / fresh").setDefaultValue("optimize");
 
         return optionDefinition;
     }
