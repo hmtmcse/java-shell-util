@@ -4,40 +4,18 @@ import com.hmtmcse.shellutil.base.CommandRequest;
 import com.hmtmcse.shellutil.base.CommandResponse;
 import com.hmtmcse.shellutil.base.OSCommandExec;
 import com.hmtmcse.shellutil.common.ShellUtilException;
-import com.hmtmcse.shellutil.console.menu.ConsoleCommandMenu;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 public class Main {
 
-    public static void consoleMenuTest(String[] args) {
-        try {
-            ConsoleCommandMenu consoleCommandMenu = new ConsoleCommandMenu();
-            Option option = consoleCommandMenu.option("m", true, "Multiple");
-            option.setArgs(2);
-            consoleCommandMenu
-                    .addCommand("build", "Compile Source to Binary")
-                    .addOption(option)
-                    .addOption("c", "Config");
-
-
-            consoleCommandMenu.addCommand("update", "Update by build")
-                    .addOption(option);
-            consoleCommandMenu.process(args);
-        } catch (ShellUtilException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 
     public static void main(String[] args) {
 
         args = new String[]{"build", "-m" , "first", "second", "-c"};
 //        args = new String[]{"build", "-m" , "first", "second"};
-        consoleMenuTest(args);
-
         final Option verboseOption = Option.builder("v")
                 .required(false)
                 .desc("Print status with verbosity.")
