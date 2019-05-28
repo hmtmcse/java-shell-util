@@ -10,6 +10,7 @@ public class CommandRequest {
     public String[] command;
     public File commandHome = null;
     public Boolean isPrintInConsole = false;
+    public Boolean isPrintCommands = false;
     public Boolean isWaitUntilFinish = true;
     public Boolean isIncludeSystemEnvironment = true;
     public CmdOutputLineCallBack cmdOutputLineCallBack = null;

@@ -1,11 +1,23 @@
 package com.hmtmcse.shellutil.print;
 
+import java.util.Arrays;
+
 public class ConsolePrinter {
 
     public static void printLine(Object object, String colorCode){
         System.out.print(colorCode);
         System.out.print(object);
         System.out.println(ColorCode.RESET);
+    }
+
+    public static void printLine(Object[] object, String colorCode){
+        System.out.print(colorCode);
+        System.out.print(Arrays.toString(object));
+        System.out.println(ColorCode.RESET);
+    }
+
+    public static void printLine(Object[] object){
+        System.out.println(Arrays.toString(object));
     }
 
     public static void printLine(Object object){

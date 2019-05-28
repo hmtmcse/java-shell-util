@@ -1,5 +1,7 @@
 package com.hmtmcse.shellutil.base;
 
+import com.hmtmcse.shellutil.print.ConsolePrinter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,6 +45,9 @@ public class OSCommandExec {
     public CommandResponse execute(CommandRequest commandRequest) {
         CommandResponse commandResponse = new CommandResponse();
         try {
+            if (commandRequest.isPrintCommands){
+                ConsolePrinter.printLine(commandRequest.command);
+            }
             currentProcess = Runtime.getRuntime().exec(commandRequest.command, commandRequest.getEnvironment(), commandRequest.commandHome);
             if (commandRequest.isWaitUntilFinish) {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(currentProcess.getInputStream()));
@@ -50,7 +55,7 @@ public class OSCommandExec {
                 StringBuffer stringBuffer = new StringBuffer();
                 while ((line = bufferedReader.readLine()) != null) {
                     if (commandRequest.isPrintInConsole) {
-                        System.out.println(line);
+                        ConsolePrinter.printLine(line);
                     }
                     if (commandRequest.cmdOutputLineCallBack != null) {
                         commandRequest.cmdOutputLineCallBack.eachLine(line, this);
