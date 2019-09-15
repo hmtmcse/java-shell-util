@@ -1,4 +1,4 @@
-build
+uild
  1. branch
  2. type [optimize, fresh]
 update
