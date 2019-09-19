@@ -5,6 +5,8 @@ import com.hmtmcse.io.file.FileHelperException;
 import com.hmtmcse.io.file.FileHelperRequestDef;
 import com.hmtmcse.io.file.FileHelperResponseDef;
 
+import java.io.File;
+
 public class SudoFDHelper implements FileHelperDef {
 
     @Override
@@ -139,6 +141,11 @@ public class SudoFDHelper implements FileHelperDef {
 
     @Override
     public Boolean isItSymbolicLink(String path) throws FileHelperException {
+        return null;
+    }
+
+    @Override
+    public File getFile(String location) throws FileHelperException {
         return null;
     }
 
