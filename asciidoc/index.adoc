@@ -2,3 +2,6 @@
 H.M.Touhid Mia
 :toc:
 
+{blank} +
+
+include::topics/console-menu.adoc[]
