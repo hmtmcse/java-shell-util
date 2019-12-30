@@ -2,6 +2,7 @@ package com.hmtmcse.shellutil.base;
 
 import java.io.File;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -34,6 +35,12 @@ public class CommandRequest {
 
     public CommandRequest setCommand(String[] command) {
         this.command = command;
+        return this;
+    }
+
+    public CommandRequest setCommand(List<String> command) {
+        this.command = new String[command.size()];
+        this.command = command.toArray(this.command);
         return this;
     }
 
