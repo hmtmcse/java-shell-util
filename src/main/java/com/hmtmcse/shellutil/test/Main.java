@@ -14,6 +14,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        execTest();
+        System.exit(0);
+
         args = new String[]{"build", "-m" , "first", "second", "-c"};
 //        args = new String[]{"build", "-m" , "first", "second"};
         final Option verboseOption = Option.builder("v")
@@ -36,7 +39,11 @@ public class Main {
 
     public static void execTest() {
         OSCommandExec osCommandExec = new OSCommandExec();
-        CommandResponse commandResponse = osCommandExec.execute(CommandRequest.withCommand("which", "git").setPrintInConsole(true).setWaitUntilFinish(false));
+        CommandResponse commandResponse = osCommandExec.execute(
+                CommandRequest.withCommand("ping", "google.com")
+                        .setPrintInConsole(true)
+                        .setWaitUntilFinish(true)
+        );
 
         if (!commandResponse.isExecuted) {
             System.out.println(commandResponse.exceptionMessage);
