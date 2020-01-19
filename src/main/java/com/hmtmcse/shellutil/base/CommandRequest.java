@@ -38,6 +38,18 @@ public class CommandRequest {
         return this;
     }
 
+    private String[] stringToArray(String command) {
+        if (command == null) {
+            return null;
+        }
+        return command.split(" ");
+    }
+
+    public CommandRequest setCommand(String command) {
+        this.command = stringToArray(command);
+        return this;
+    }
+
     public CommandRequest setCommand(List<String> command) {
         this.command = new String[command.size()];
         this.command = command.toArray(this.command);
