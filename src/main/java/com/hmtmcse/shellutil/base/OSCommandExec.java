@@ -41,6 +41,19 @@ public class OSCommandExec {
        return stringBuffer.toString();
     }
 
+    private void printOutput(CommandRequest commandRequest, InputStream inputStream, StringBuffer stringBuffer) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        while ((line = bufferedReader.readLine()) != null) {
+            if (commandRequest.isPrintInConsole) {
+                ConsolePrinter.printLine(line);
+            }
+            if (commandRequest.cmdOutputLineCallBack != null) {
+                commandRequest.cmdOutputLineCallBack.eachLine(line, this);
+            }
+            stringBuffer.append(line).append("\n");
+        }
+    }
 
     public CommandResponse execute(CommandRequest commandRequest) {
         CommandResponse commandResponse = new CommandResponse();
@@ -50,22 +63,29 @@ public class OSCommandExec {
             }
             currentProcess = Runtime.getRuntime().exec(commandRequest.command, commandRequest.getEnvironment(), commandRequest.commandHome);
             if (commandRequest.isWaitUntilFinish) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(currentProcess.getInputStream()));
-                String line = "";
+
                 StringBuffer stringBuffer = new StringBuffer();
-                while ((line = bufferedReader.readLine()) != null) {
-                    if (commandRequest.isPrintInConsole) {
-                        ConsolePrinter.printLine(line);
-                    }
-                    if (commandRequest.cmdOutputLineCallBack != null) {
-                        commandRequest.cmdOutputLineCallBack.eachLine(line, this);
-                    } else {
-                        stringBuffer.append(line).append("\n");
-                    }
-                }
+                printOutput(commandRequest, currentProcess.getInputStream(), stringBuffer);
+
+                StringBuffer errorBuffer = new StringBuffer();
+                printOutput(commandRequest, currentProcess.getErrorStream(), errorBuffer);
+
+//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(currentProcess.getInputStream()));
+//                String line = "";
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    if (commandRequest.isPrintInConsole) {
+//                        ConsolePrinter.printLine(line);
+//                    }
+//                    if (commandRequest.cmdOutputLineCallBack != null) {
+//                        commandRequest.cmdOutputLineCallBack.eachLine(line, this);
+//                    }
+//                    stringBuffer.append(line).append("\n");
+//                }
+
                 currentProcess.waitFor();
                 commandResponse.exitCode = currentProcess.exitValue();
                 commandResponse.commandOutput = stringBuffer.toString();
+                commandResponse.errorOutput = errorBuffer.toString();
             }
         } catch (IOException | InterruptedException e) {
             commandResponse.isExecuted = false;
