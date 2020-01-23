@@ -70,18 +70,6 @@ public class OSCommandExec {
                 StringBuffer errorBuffer = new StringBuffer();
                 printOutput(commandRequest, currentProcess.getErrorStream(), errorBuffer);
 
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(currentProcess.getInputStream()));
-//                String line = "";
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    if (commandRequest.isPrintInConsole) {
-//                        ConsolePrinter.printLine(line);
-//                    }
-//                    if (commandRequest.cmdOutputLineCallBack != null) {
-//                        commandRequest.cmdOutputLineCallBack.eachLine(line, this);
-//                    }
-//                    stringBuffer.append(line).append("\n");
-//                }
-
                 currentProcess.waitFor();
                 commandResponse.exitCode = currentProcess.exitValue();
                 commandResponse.commandOutput = stringBuffer.toString();
