@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class OSCommandExec {
 
@@ -41,7 +42,7 @@ public class OSCommandExec {
        return stringBuffer.toString();
     }
 
-    private void printOutput(CommandRequest commandRequest, InputStream inputStream, StringBuffer stringBuffer) throws IOException {
+    private void printOutput(CommandRequest commandRequest, InputStream inputStream, StringBuffer stringBuffer, List<String> outLines) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         while ((line = bufferedReader.readLine()) != null) {
@@ -51,7 +52,8 @@ public class OSCommandExec {
             if (commandRequest.cmdOutputLineCallBack != null) {
                 commandRequest.cmdOutputLineCallBack.eachLine(line, this);
             }
-            stringBuffer.append(line).append("\n");
+            stringBuffer.append(line).append(System.lineSeparator());
+            outLines.add(line);
         }
     }
 
@@ -65,10 +67,10 @@ public class OSCommandExec {
             if (commandRequest.isWaitUntilFinish) {
 
                 StringBuffer stringBuffer = new StringBuffer();
-                printOutput(commandRequest, currentProcess.getInputStream(), stringBuffer);
+                printOutput(commandRequest, currentProcess.getInputStream(), stringBuffer, commandResponse.commandOutputLine);
 
                 StringBuffer errorBuffer = new StringBuffer();
-                printOutput(commandRequest, currentProcess.getErrorStream(), errorBuffer);
+                printOutput(commandRequest, currentProcess.getErrorStream(), errorBuffer, commandResponse.errorOutputLine);
 
                 currentProcess.waitFor();
                 commandResponse.exitCode = currentProcess.exitValue();
